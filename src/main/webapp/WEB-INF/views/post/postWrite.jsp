@@ -181,6 +181,7 @@
   			<div class="col-md-3 col-sm-2"></div>
   		</div>
   		
+  		
 		<input type="submit" value="글쓰기" class="btn btn-outline-info">
 		<input type="reset" value="다시입력" class="btn btn-outline-info">
 		<button type="button" id="back" class="btn btn-outline-info">돌아가기</button>
