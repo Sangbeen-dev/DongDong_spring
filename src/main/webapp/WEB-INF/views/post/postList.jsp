@@ -77,7 +77,7 @@
 }
 
 .card {
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 	width: 340px;
 	height: 410px;
 }
@@ -365,8 +365,8 @@ $(document).ready(function(){
 						
 						<h4 class="price"><%=price%>원
 						</h4>
-						<small class="text-muted"
-							style="position: absolute; right: 0px; bottom: 0px;"><%=pDateResult%></small>
+						<h6 class="text-muted"
+							style="position: absolute; right: 0px; bottom: 0px;"><%=pDateResult%></h6>
 					</div>
 					<!-- card-body -->
 				</div>

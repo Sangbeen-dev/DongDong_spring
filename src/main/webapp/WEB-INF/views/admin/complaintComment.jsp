@@ -62,7 +62,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>현황판</span></a>
@@ -89,7 +89,7 @@
                     <span>게시글</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/admin/complaintComment">
                 	<i class="fas fa-fw fa-list"></i>
                     <span>댓글</span>
@@ -196,7 +196,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>&copy; DongDong Market Inc.</span>
                     </div>
                 </div>
             </footer>

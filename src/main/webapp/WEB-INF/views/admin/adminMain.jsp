@@ -39,9 +39,20 @@
 		
 		mainChartUpdate(mainChartLabel,postChartData,purchaseChartData,accountChartData,complaintChartData);
 		txPieChartUpdate(txPieChartData);
-		
-		$(".datepicker").datepicker();
-		
+
+		$.datepicker.setDefaults($.datepicker.regional['ko']); 
+		$("#startDate").datepicker({
+			maxDate: 0,
+			 onClose: function( selectedDate ) {
+                 $("#endDate").datepicker( "option", "minDate", selectedDate );
+			 }
+		});
+		$("#endDate").datepicker({
+			maxDate: 0,
+			onClose: function( selectedDate ) {
+                $("#startDate").datepicker( "option", "maxDate", selectedDate );
+            }  
+		});
 		$("#txChartForm").on("submit", function(event){
 			event.preventDefault();	
 			var selectType = $("#txChartSelect").val();
@@ -329,15 +340,15 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">TX 사용자 입력 조회</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">TX 통계 조회</h6>
                                     <div class="date-select-div">
 	                                    <form action="" id="txChartForm">
   											<div class="form-row">
   												<div class="col-xs-3">
-	                                        		<input type="text" class="datepicker form-control" id="startDate"> 
+	                                        		<input type="text" class="datepicker form-control" id="startDate" readonly="readonly"> 
 	                                        	</div> ~ 
 	                                        	<div class="col-xs-3">
-	                                        		<input type="text" class="datepicker form-control" id="endDate">
+	                                        		<input type="text" class="datepicker form-control" id="endDate" readonly="readonly">
 	                                        	</div>
 	                                        	<div class="col-xs-3">
 	                                        		<select class="form-control" id="txChartSelect">

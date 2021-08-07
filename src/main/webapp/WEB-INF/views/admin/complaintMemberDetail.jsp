@@ -81,7 +81,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>현황판</span></a>
@@ -96,7 +96,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/admin/complaintMember">
                     <i class="fas fa-fw fa-user-cog"></i>
                     <span>회원</span>
@@ -175,113 +175,135 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                            	<h4 class="m-0 font-weight-bold text-primary">신고자의 설명</h4><br>
-                            		<h6>${coDTO.coContent}</h6><br>
-                            	<h4 class="m-0 font-weight-bold text-primary">신고된 회원의 정보</h4><br>
                             	
-                            	<c:if test="${isSanctioned==true}">
-									<font class="text-danger">현재 계정 상태 : 정지중 (${endSanctionDate}까지)</font><br>
-								</c:if>
-								<c:if test="${isSanctioned==false}">
-									<font class="text-primary">현재 계정 상태 : 정상</font><br>
-								</c:if>
-								<c:if test="${! empty sanctionList}">
-									<font class="text-danger">제재 이력이 ${sanctionList.size()}건 있는 계정입니다.</font><br>
-									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-	                                    <thead>
-	                                        <tr>
-	                                            <th>신고 번호</th>
-	                                            <th>처리내용</th>
-	                                            <th>처리일시</th>
-	                                            <th>제재기간</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                    	<c:forEach var="saDTO" items="${sanctionList}" varStatus="stat">
-	                                        <tr>
-	                                            <td>${saDTO.saNum}</td>
-	                                            <td>
-	                                           		<c:choose>
-	                                           			<c:when test="${saDTO.saType==1}">
-	                                           				불법사이트 홍보/계정 해킹 시도
-	                                           			</c:when>
-	                                           			<c:when test="${saDTO.saType==2}">
-	                                           				불법 거래 / 범죄 행위
-	                                           			</c:when>
-	                                           			<c:when test="${saDTO.saType==3}">
-	                                           				폭력젹인 언어, 욕설, 비속어 사용
-	                                           			</c:when>
-	                                           			<c:when test="${saDTO.saType==4}">
-	                                           				부적절한 사진/게시글 게시
-	                                           			</c:when>
-	                                           			<c:when test="${saDTO.saType==5}">
-	                                           				반복적 게시글/댓글 등록 행위
-	                                           			</c:when>
-	                                           		</c:choose>
-	                                            
-	                                            </td>
-	                                            <td>${saDTO.startDate}</td>
-	                                            <td>${saDTO.endDate}</td>
-	                                        </tr>
-	                                        </c:forEach>
-	                                    </tbody>
-                                	</table><br>			
-								</c:if>
-								<c:if test="${empty sanctionList}">
-									<font class="text-primary">제재 이력이 없는 계정입니다.</font><br><br>
-								</c:if>
-                                
-                                <br>프로필 이미지<br>
-                            	<img id="mainImage" class="img-fluid rounded mb-4 mb-lg-0" src="/Dong-Dong/images/profile/${mDTO.userimage}" width="200px"><br>
-								<br>아이디<br>
-        						<h4 class="" style="line-height: 1.5;">${mDTO.nickName}</h4><br>
-                                
-                                <h4 class="m-0 font-weight-bold text-primary">제재 결과 입력</h4>
-                                <c:if test="${coDTO.coYn=='n'}">
-                                <form action="/admin/complaintEnd" method="post">
-                                	<input type="hidden" name="coNum" value="${coDTO.coNum}">
-	                                <div class="row">
-							  			<div class="col-md-3 col-sm-2"></div>
-										<div class="col-md-6 col-sm-8 mb-3">
-											<select class="form-select" aria-label="Default select example" name="saType" id="saType">
-							  					<option value="none" selected>카테고리 선택</option>
-							  					<option value="0">문제 없음</option>
-							  					<option value="1">불법 사이트 홍보나 계정 해킹 시도</option>
-												<option value="2">불법적인 거래나 범죄 행위</option>
-												<option value="3">폭력적인 언어, 욕설, 비속어, 은어 등의 사용</option>
-												<option value="4">타인에게 불쾌감, 혐오감을 일으킬 수 있는 게시글이나 이미지 게시</option>
-												<option value="5">반복적으로 댓글이나 게시글을 등록하는 등 서비스 방해</option>
-											</select>
-										</div>
-							  			<div class="col-md-3 col-sm-2"></div>
-							  			<div class="col-md-3 col-sm-2"></div>
-										<div class="col-md-6 col-sm-8 mb-3">
-											<select class="form-select" aria-label="Default select example" name="saDate" id="saDate">
-							  					<option value="none" selected>기간 선택</option>
-							  					<option value="0">제재 없이 종결</option>
-							  					<option value="1">1일</option>
-												<option value="3">3일</option>
-												<option value="7">7일</option>
-												<option value="14">14일</option>
-												<option value="30">30일</option>
-												<option value="999">영구</option>
-											</select>
-										</div>
-							  			<div class="col-md-3 col-sm-2"></div>
-							  		</div>
-							  		<input type="submit" value="신고 처리" class="btn btn-danger" style="align-items: right">
-							  	</form>
-							  	</c:if>
-							  	<c:if test="${coDTO.coYn=='y'}">
-							  		<br><h4 class="text-danger">신고 처리 완료 (${coDTO.endDate})</h4>
-							  	</c:if>
+                            	
+                            	<div class="complaintDetail card w-90 m-4 p-3 bg-white rounded">
+	                                <h4 class="m-0 font-weight-bold text-primary">신고자의 설명</h4>
+		                            <div class="row">
+		                            	<div class="col-md-12"><br>
+			                        		<h4>${coDTO.coContent}</h4><br>
+		                           		</div>
+	                            	</div>
                             	</div>
+                            	
+                            	<div class="memberDetail card w-90 m-4 p-3 bg-white rounded">
+									<h4 class="m-0 font-weight-bold text-primary">작성자 정보</h4><br>
+                            		 <div class="row">
+			                            <div class="col-md-4">
+											<h4 class="m-0 font-weight-bold text-dark">프로필 이미지</h4>
+		                            		<img id="mainImage" class="img-fluid rounded mb-4 mb-lg-0" src="/Dong-Dong/images/profile/${mDTO.userimage}" width="400px"><br>
+	        							</div>
+			                            <div class="col-md-8">
+	        								<h4 class="m-0 font-weight-bold text-dark">아이디</h4>
+		        							<h4 class="" style="line-height: 1.5;">${mDTO.nickName}</h4><br>
+		        						</div>
+	        						</div>
+								</div>
+								
+								
+								<div class="sanctionDetail card w-90 m-4 p-3 bg-white rounded">
+									<h4 class="m-0 font-weight-bold text-primary">제재 내역 정보</h4><br>
+									
+									<c:if test="${isSanctioned==true}">
+										<font class="text-danger">현재 계정 상태 : 정지중 (${endSanctionDate}까지)</font><br>
+									</c:if>
+									<c:if test="${isSanctioned==false}">
+										<font class="text-primary">현재 계정 상태 : 정상</font><br>
+									</c:if>
+									<c:if test="${! empty sanctionList}">
+										<font class="text-danger">제재 이력이 ${sanctionList.size()}건 있는 계정입니다.</font><br>
+										<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>신고 번호</th>
+		                                            <th>처리내용</th>
+		                                            <th>처리일시</th>
+		                                            <th>제재기간</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    	<c:forEach var="saDTO" items="${sanctionList}" varStatus="stat">
+		                                        <tr>
+		                                            <td>${saDTO.saNum}</td>
+		                                            <td>
+		                                           		<c:choose>
+		                                           			<c:when test="${saDTO.saType==1}">
+		                                           				불법사이트 홍보/계정 해킹 시도
+		                                           			</c:when>
+		                                           			<c:when test="${saDTO.saType==2}">
+		                                           				불법 거래 / 범죄 행위
+		                                           			</c:when>
+		                                           			<c:when test="${saDTO.saType==3}">
+		                                           				폭력젹인 언어, 욕설, 비속어 사용
+		                                           			</c:when>
+		                                           			<c:when test="${saDTO.saType==4}">
+		                                           				부적절한 사진/게시글 게시
+		                                           			</c:when>
+		                                           			<c:when test="${saDTO.saType==5}">
+		                                           				반복적 게시글/댓글 등록 행위
+		                                           			</c:when>
+		                                           		</c:choose>
+		                                            
+		                                            </td>
+		                                            <td>${saDTO.startDate}</td>
+		                                            <td>${saDTO.endDate}</td>
+		                                        </tr>
+		                                        </c:forEach>
+		                                    </tbody>
+	                                	</table><br>			
+									</c:if>
+									<c:if test="${empty sanctionList}">
+										<font class="text-primary">제재 이력이 없는 계정입니다.</font><br><br>
+									</c:if>
+								</div>
+                               
+                               
+                            	<div class="scantionChoice card w-90 m-4 p-3 bg-white rounded">
+	                                <h4 class="m-0 font-weight-bold text-primary">제재 결과 입력</h4><br>
+                               		<c:if test="${coDTO.coYn=='n'}">
+	                                <form action="/admin/complaintEnd" method="post">
+	                                	<input type="hidden" name="coNum" value="${coDTO.coNum}">
+		                                <div class="row">
+											<div class="col-md-12 col-sm-8 mb-3">
+												<select class="form-control" aria-label="Default select example" name="saType" id="saType">
+								  					<option value="none" selected>제재할 대상의 종류를 선택하세요.</option>
+								  					<option value="0">문제 없음</option>
+								  					<option value="1">불법 사이트 홍보나 계정 해킹 시도</option>
+													<option value="2">불법적인 거래나 범죄 행위</option>
+													<option value="3">폭력적인 언어, 욕설, 비속어, 은어 등의 사용</option>
+													<option value="4">타인에게 불쾌감, 혐오감을 일으킬 수 있는 게시글이나 이미지 게시</option>
+													<option value="5">반복적으로 댓글이나 게시글을 등록하는 등 서비스 방해</option>
+												</select>
+											</div>
+								  		</div>
+								  		<div class="row">
+											<div class="col-md-12 col-sm-8 mb-3">
+												<select class="form-control" aria-label="Default select example" name="saDate" id="saDate">
+								  					<option value="none" selected>제재 기간을 선택하세요.</option>
+								  					<option value="0">정지 기간 없음</option>
+								  					<option value="1">1일</option>
+													<option value="3">3일</option>
+													<option value="7">7일</option>
+													<option value="14">14일</option>
+													<option value="30">30일</option>
+													<option value="999">영구</option>
+												</select>
+											</div>
+								  		</div>
+										<input type="submit" value="신고 처리" class="btn btn-danger" style="align-items: right">
+								  	</form>
+								  	</c:if>
+								  	<c:if test="${coDTO.coYn=='y'}">
+								  		<br><h4 class="text-danger">신고 처리 완료 (${coDTO.endDate})</h4>
+								  	</c:if>
+								  	</div>
+                            	</div>
+                            	<br><br>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
-
+				<br><br>
             </div>
             <!-- End of Main Content -->
 
@@ -289,7 +311,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>&copy; DongDong Market Inc.</span>
                     </div>
                 </div>
             </footer>

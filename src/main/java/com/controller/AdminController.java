@@ -144,22 +144,20 @@ public class AdminController {
 				end = changeDataFormat.format(endCal.getTime());
 				if(end.substring(0,10).equals(currentTime.substring(0,10))) {
 					longLength = (curCal.getTimeInMillis()-startCal.getTimeInMillis())/60/60/1000;
-					length = (int)longLength;
+					length = (int)longLength+1;
 					end = changeDataFormat.format(curCal.getTime());
 				} else{
 					longLength = (endCal.getTimeInMillis()-startCal.getTimeInMillis())/60/60/1000;
-					length = (int)longLength+23;
+					length = (int)longLength+24;
 					end = end.substring(0,10).concat("_23");
 				}
-				
 			} else if(selectType.equals("D")) {
 				longLength = (endCal.getTimeInMillis()-startCal.getTimeInMillis())/60/60/24/1000;
 				length = (int)longLength+1;
 				end = changeDataFormat.format(endCal.getTime());
 				end = end.substring(0,10);
 			} else if(selectType.equals("M")) {
-				longLength = (endCal.getTimeInMillis()-startCal.getTimeInMillis())/60/60/24/1000/30;
-				length = (int)longLength+1;
+				length = endCal.get(Calendar.MONTH)-startCal.get(Calendar.MONTH)+1;
 				end = changeDataFormat.format(endCal.getTime());
 				end = end.substring(0,7);
 			}
@@ -280,6 +278,16 @@ public class AdminController {
 			pDTO.setpImage(coDTO.getTargetImage());
 			pDTO.setpContent(coDTO.getTargetContent());
 			mav.addObject("pDTO", pDTO);
+			// 다중파일 대비 이미지파싱
+    		String[] originalImages = pDTO.getpImage().split(" ");
+    		mav.addObject("imageDetail", originalImages);
+    		
+    		// 다중파일인 경우 postDetail에서 추가부분이 있어 구분자로 넣어줌
+    		if(originalImages.length == 1) { 
+    			mav.addObject("isMultiFile","N");
+    		} else {
+    			mav.addObject("isMultiFile","Y");
+    		}
 			mav.setViewName("admin/complaintPostDetail");
 			break;
 		case 3:

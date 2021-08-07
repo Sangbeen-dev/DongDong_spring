@@ -41,6 +41,7 @@ public class ComplaintController {
 		String coTarget = map.get("coTarget");
 		String userid = map.get("userid");
 		String coContent = map.get("coContent");
+		coContent = coContent.replaceAll("\n", "<br>");
 		int coType = Integer.parseInt(map.get("coType"));
 		String returnValue = "";
 

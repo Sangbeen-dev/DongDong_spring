@@ -381,35 +381,38 @@ public class StatisticService {
 		File readFile = new File("C:/Dong-Dong_log/statistics.stat");
 		Calendar cal = Calendar.getInstance();
 		Date startDate = null;
-		String currentTime=null;
-		String nextTime=null;
+		String startDateStr=null;
+		String nextDateStr=null;
+		boolean isToday = false;
 		try {
+			dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String todayStr=dateFormat.format(cal.getTime());
 			if(statisticType.equals("H")) {
 				dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH");
 				labelFormat = new SimpleDateFormat("dd일 HH시");
 				startDate = dateFormat.parse(date);
 				cal.setTime(startDate);
-				currentTime=dateFormat.format(cal.getTime());
+				startDateStr=dateFormat.format(cal.getTime());
 				cal.add(Calendar.HOUR, 1);
-				nextTime=dateFormat.format(cal.getTime());
+				nextDateStr=dateFormat.format(cal.getTime());
 				cal.add(Calendar.HOUR, -(dataNumber));
 			} else if(statisticType.equals("D")) {
 				dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				labelFormat = new SimpleDateFormat("MM월 dd일");
 				startDate = dateFormat.parse(date);
 				cal.setTime(startDate);
-				currentTime=dateFormat.format(cal.getTime());
+				startDateStr=dateFormat.format(cal.getTime());
 				cal.add(Calendar.DATE, 1);
-				nextTime=dateFormat.format(cal.getTime());
+				nextDateStr=dateFormat.format(cal.getTime());
 				cal.add(Calendar.DATE, -(dataNumber));
 			} else if(statisticType.equals("M")) {	
 				dateFormat = new SimpleDateFormat("yyyy-MM");
 				labelFormat = new SimpleDateFormat("yyyy년 MM월");
 				startDate = dateFormat.parse(date);
 				cal.setTime(startDate);
-				currentTime=dateFormat.format(cal.getTime());
+				startDateStr=dateFormat.format(cal.getTime());
 				cal.add(Calendar.MONTH, 1);
-				nextTime=dateFormat.format(cal.getTime());
+				nextDateStr=dateFormat.format(cal.getTime());
 				cal.add(Calendar.MONTH, -(dataNumber));
 			}
 			BufferedReader reader = new BufferedReader(new FileReader(readFile));
@@ -418,7 +421,7 @@ public class StatisticService {
 			int thisDateSum=0;
 			while((nextLine = reader.readLine())!=null){
 				targetDate=dateFormat.format(cal.getTime());
-				if(targetDate.equals(nextTime)) {
+				if(targetDate.equals(nextDateStr)) {
 					break;
 				}
 				if(nextLine.contains("["+statisticType+"]"+targetDate)) {
@@ -432,10 +435,10 @@ public class StatisticService {
 					} else if(statisticType.equals("M")) {
 						cal.add(Calendar.MONTH, 1);
 					}
-				} else if(statisticType.equals("M")&&nextLine.contains("[H]"+currentTime)) {
+				} else if(statisticType.equals("M")&&nextLine.contains("[H]"+startDateStr)) {
 					String [] str = nextLine.split(":");
 					thisDateSum+=Integer.parseInt(str[1])+Integer.parseInt(str[2])+Integer.parseInt(str[3])+Integer.parseInt(str[4]);
-				} else if(statisticType.equals("D")&&nextLine.contains("[H]"+currentTime)) {
+				} else if(statisticType.equals("D")&&nextLine.contains("[H]"+startDateStr)) {
 					String [] str = nextLine.split(":");
 					thisDateSum+=Integer.parseInt(str[1])+Integer.parseInt(str[2])+Integer.parseInt(str[3])+Integer.parseInt(str[4]);
 				}
@@ -450,9 +453,13 @@ public class StatisticService {
 				}
 			}
 			reader.close();
-
-			txChartLabel.add(labelFormat.format(startDate));
-			txChartData.add(thisDateSum);
+			if(!statisticType.equals("M")&&date.substring(0,10).equals(todayStr)) {
+				txChartLabel.add(labelFormat.format(startDate));
+				txChartData.add(thisDateSum);
+			} else if(statisticType.equals("M")&&date.substring(0,7).equals(todayStr.substring(0,7))) {
+				txChartLabel.add(labelFormat.format(startDate));
+				txChartData.add(thisDateSum);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
