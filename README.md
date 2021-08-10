@@ -27,25 +27,34 @@
 
 ## 실행방법
 
-## SSL 적용방법
-# 개발 테스트용으로 공인인증기관이 아닌 내가 인증기관 인거처럼 작업
+### SSL 적용방법
+#### 개발 테스트용으로 공인인증기관이 아닌 내가 인증기관 인거처럼 작업
    인증기관용 개인키 를 만들고, 웹브라우저에 설치될 루트 인증서도 만들어 사용
   
   필요한 파일은 cert 폴더에 압축하여 업로드.(keystore, .crt ...)
   keypass 는 "dongdong" 로 동일하게 적용.
   
   1. Tomcat 설정
-    - server.xml 에 <Connector connectionTimeout="20000" port="8079" protocol="HTTP/1.1" redirectPort="8443"/> 바로 아래에
-  <Connector SSLEnabled="true" clientAuth="false" keystoreFile="keystore 파일위치" keystorePass="dongdong" maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11Protocol" scheme="https" secure="true" sslProtocol="TLS"/> 추가.
   
-  2. 사설 root 인증서 설치 
+      server.xml 에 
+    ```
+    <Connector connectionTimeout="20000" port="8079" protocol="HTTP/1.1" redirectPort="8443"/> 
+    ```
+    
+     - 바로 아래에 아래 내용 추가.
+   
+   ```
+   <Connector SSLEnabled="true" clientAuth="false" keystoreFile="keystore 파일위치" keystorePass="dongdong" maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11Protocol" scheme="https" secure="true" sslProtocol="TLS"/>
+   ``` 
+  
+  2. 사설 root 인증서 설치     
     IE 웹브라우저
-      1. IE 웹 브라우저에서 도구 ⇒ 인터넷 옵션 ⇒ 내용 ⇒ 인증서를 클릭.
-      2. 신뢰할 수 있는 루트 인증기관 탭에서 "가져오기" 를 실행하여 앞에서 만든 rootca.crt 를 가져오기.
+     - IE 웹 브라우저에서 도구 ⇒ 인터넷 옵션 ⇒ 내용 ⇒ 인증서를 클릭.
+     - 신뢰할 수 있는 루트 인증기관 탭에서 "가져오기" 를 실행하여 앞에서 만든 rootca.crt 를 가져오기  
       
-    크롬 브라우져 
-      1. 설정 ⇒ 개인정보 및 보안 ⇒ 인증서 관리 에서 추가가능 
-
+      크롬 브라우져 
+      
+     - 설정 ⇒ 개인정보 및 보안 ⇒ 인증서 관리 에서 추가가능
 
 ## 기능설명
 
