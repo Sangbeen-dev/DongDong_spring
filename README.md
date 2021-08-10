@@ -31,17 +31,15 @@
 #### 개발 테스트용으로 공인인증기관이 아닌 내가 인증기관 인거처럼 작업
    인증기관용 개인키 를 만들고, 웹브라우저에 설치될 루트 인증서도 만들어 사용
   
-  필요한 파일은 cert 폴더에 압축하여 업로드.(keystore, .crt ...)
-  keypass 는 "dongdong" 로 동일하게 적용.
+  필요한 파일은 cert 폴더에 압축하여 업로드, keypass 는 "dongdong" 으로 동일하게 적용.
   
   1. Tomcat 설정
   
       server.xml 에 
     ```
     <Connector connectionTimeout="20000" port="8079" protocol="HTTP/1.1" redirectPort="8443"/> 
-    ```
-    
-     - 바로 아래에 아래 내용 추가.
+    ```  
+    아래에 내용 추가.
    
    ```
    <Connector SSLEnabled="true" clientAuth="false" keystoreFile="keystore 파일위치" keystorePass="dongdong" maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11Protocol" scheme="https" secure="true" sslProtocol="TLS"/>
