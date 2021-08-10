@@ -19,12 +19,13 @@
 ## 역할분배
 
 - SeongHo Shin : PM, 1:1채팅, 소셜로그인, 웹 훅
-
 - SangBeen Lee : 회원정보(마이페이지), 소셜로그인, 페이지보안(SSL)
 - JaeHee Ahn : 게시글 CRUD, 멀티파일 업로드, 카테고리/키워드 검색, 끌올기능, 실시간 알림
 - GiDong Du : 게시글 CRUD, 댓글기능, 관리자페이지, 데이터 통계작업
 - MinSeok Jang : 메인페이지(페이징, 관심목록 위젯)
 - SungSu Park : 회원가입 
+
+## 실행방법
 
 
 
